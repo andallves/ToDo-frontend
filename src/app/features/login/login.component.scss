@@ -1,0 +1,12 @@
+@use '../../core/sass/settings/colors' as f;
+
+section {
+  width: 100%;
+  height: 100vh;
+  background: var(--secondary);
+
+  form {
+    margin: 0 auto;
+  }
+
+}

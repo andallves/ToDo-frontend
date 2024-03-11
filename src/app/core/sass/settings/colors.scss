@@ -1,0 +1,20 @@
+:root {
+  --primary: #25294C;
+  --secondary: #202342;
+  --text-primary: #333333;
+  --text-secondary: #E9ECEF;
+  --background: #E9ECEF;
+  --brand: #27C498;
+  --positive: #0D6EFD;
+  --success: #198754;
+  --warning: #FFC107;
+  --danger: #DC3545;
+}
+
+$bg: var(--orange-color);
+
+@mixin default-font {
+  font-size: 24rem;
+  color: $bg;
+}
+
