@@ -1,11 +1,44 @@
 <section>
-  <form>
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" formControlName="email" />
-    <label for="password">Senha</label>
-    <input id="password" name="password" type="password"
-           formControlName="password" />
-    <button type="submit">Entrar</button>
+  <form
+    class="form-container"
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()">
+    <h2 class="form-title">Autenticação</h2>
+
+    <div class="form-field-container">
+
+      <mat-form-field appearance="fill" class="input-field-container">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          formControlName="email"
+          placeholder="exemplo@email.com"
+          [value]="registerForm.get('email')?.value" />
+        <mat-error *ngIf="isValid('email', 'required')">
+          Email é <strong>obrigatório</strong>
+        </mat-error>
+        <mat-error *ngIf="isValid('email', 'email')">
+          Email é <strong>inválido</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-field-container">
+        <mat-label>Senha</mat-label>
+        <input
+          type="password"
+          matInput
+          formControlName="password"
+          placeholder="********"
+          [value]="registerForm.get('password')?.value" />
+        <mat-error *ngIf="isValid('password', 'required')">
+          Senha é <strong>obrigatória</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <button class="btn-submit" type="submit">Entrar</button>
+    <a class="btn-signup">Não possui uma conta?</a>
   </form>
 </section>
-

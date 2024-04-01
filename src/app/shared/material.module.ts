@@ -7,12 +7,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   declarations: [],
   imports: [
     CommonModule,
-    MatInputModule,
     MatFormFieldModule,
+    MatInputModule,
   ],
   exports: [
-    MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class MaterialModule { }
