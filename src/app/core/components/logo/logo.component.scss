@@ -1,0 +1,23 @@
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  line-height: .8rem;
+
+  .logo-text {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+
+    .colorful {
+
+      color: var(--brand);
+    }
+  }
+}
