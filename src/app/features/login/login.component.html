@@ -1,3 +1,4 @@
+<app-logout-navbar />
 <section>
   <form
     class="form-container"
@@ -38,7 +39,9 @@
     </div>
 
 
-    <button class="btn-submit" type="submit">Entrar</button>
-    <a class="btn-signup">Não possui uma conta?</a>
+    <button class="btn-submit" type="submit" [disabled]="disabledButtonSubmit()">
+      Entrar
+    </button>
+
   </form>
 </section>
