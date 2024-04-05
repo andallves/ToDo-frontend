@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LogoutNavbarComponent } from './logout-navbar/logout-navbar.component';
-import {RouterLink} from "@angular/router";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 import {ComponentsModule} from "src/app/core/components/components.module";
+import {SidebarComponent} from "src/app/core/layouts/sidebar/sidebar.component";
+import {SharedModule} from "src/app/shared/shared.module";
 
 @NgModule({
   declarations: [
-    LogoutNavbarComponent
+    LogoutNavbarComponent,
+    SidebarComponent
   ],
-  imports: [CommonModule, RouterLink, ComponentsModule],
+  imports: [CommonModule, RouterLink, ComponentsModule, RouterLinkActive, SharedModule],
   exports: [
-    LogoutNavbarComponent
+    LogoutNavbarComponent,
+    SidebarComponent
   ]
 })
 export class LayoutsModule {}

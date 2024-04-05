@@ -6,14 +6,4 @@ import {Component, HostListener} from '@angular/core';
   styleUrls: ['./logout-navbar.component.scss']
 })
 export class LogoutNavbarComponent {
-  screenWidth: number;
-
-  contructor() {
-    this.getScreenSize();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  getScreenSize(event: EventListener) {
-    this.screenWidth = window.innerWidth;
-  }
 }
