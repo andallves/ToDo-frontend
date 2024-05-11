@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
+import { SignUpComponent } from './features/sign-up/sign-up.component';
+import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
   {
@@ -9,12 +10,10 @@ export const routes: Routes = [
   },
   {
     path: 'signup',
-    loadChildren: () =>
-      import('./features/sign-up/sign-up.module').then(m => m.SignUpModule),
+    component: SignUpComponent,
   },
   {
     path: '',
-    loadChildren: () =>
-      import('./features/home/home.module').then(m => m.HomeModule),
+    component: HomeComponent,
   },
 ];
