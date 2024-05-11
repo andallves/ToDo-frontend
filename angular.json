@@ -58,10 +58,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "project-todo:build:production"
+              "buildTarget": "project-todo:build:production"
             },
             "development": {
-              "browserTarget": "project-todo:build:development"
+              "buildTarget": "project-todo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -69,7 +69,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "project-todo:build"
+            "buildTarget": "project-todo:build"
           }
         },
         "test": {
@@ -93,6 +93,9 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@angular-eslint/schematics"]
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
+    "analytics": "168dbe44-cc60-483d-9819-e69f5dd993e4"
   }
 }

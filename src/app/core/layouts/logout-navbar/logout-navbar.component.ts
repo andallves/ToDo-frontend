@@ -1,19 +1,19 @@
-import {Component, HostListener} from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-logout-navbar',
   templateUrl: './logout-navbar.component.html',
-  styleUrls: ['./logout-navbar.component.scss']
+  styleUrls: ['./logout-navbar.component.scss'],
 })
 export class LogoutNavbarComponent {
-  screenWidth: number;
+  protected screenWidth!: number;
 
   contructor() {
     this.getScreenSize();
   }
 
   @HostListener('window:resize', ['$event'])
-  getScreenSize(event: EventListener) {
+  getScreenSize() {
     this.screenWidth = window.innerWidth;
   }
 }
