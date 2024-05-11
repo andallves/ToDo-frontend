@@ -1,18 +1,20 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatError } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [Mat],
+  imports: [FormsModule, MatInputModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
   protected registerForm!: FormGroup;
@@ -38,9 +40,10 @@ export class LoginComponent implements OnInit {
   }
 
   isValid(nameField: string, nameValidator: string) {
-    const formControl: any = this.registerForm.get(nameField);
-    if (formControl.errors !== null) {
-      return formControl.errors[nameValidator] && formControl.touched;
+    const formControl: AbstractControl | null =
+      this.registerForm.get(nameField);
+    if (formControl?.errors !== null) {
+      return formControl?.errors[nameValidator] && formControl.touched;
     }
   }
 }
