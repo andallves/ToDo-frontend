@@ -7,10 +7,12 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    title: 'Login - Lista de afazeres',
   },
   {
-    path: 'signup',
+    path: 'cadastro',
     component: SignUpComponent,
+    title: 'Cadastro - Lista de afazeres',
   },
   {
     path: '',
