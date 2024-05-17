@@ -1,7 +1,8 @@
 <div class="logo-container">
   <app-svg-checked [isColorful]="colorful" />
 
-  <p class="logo-text">To
-    <span [ngClass]="colorful ? 'colorful' : ''">do</span>
+  <p class="logo-text">
+    To
+    <span [ngClass]="colorful() ? 'colorful' : ''">do</span>
   </p>
 </div>
