@@ -1,25 +1,53 @@
-import { Component } from '@angular/core';
 import {
-  AbstractControl,
+  Component,
+  OnInit,
+  effect,
+  inject,
+  input,
+  output,
+} from '@angular/core';
+import {
+  ControlContainer,
   FormControl,
-  FormGroupDirective, NgForm,
-  Validators
-} from "@angular/forms";
-import {ErrorStateMatcher} from "@angular/material/core";
-
-export class MyErrorStateMather implements ErrorStateMatcher {
-  isErrorState(control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ErrorValidator } from 'src/app/core/models/error.interface';
 
 @Component({
   selector: 'app-input',
+  standalone: true,
+  imports: [MatFormFieldModule, ReactiveFormsModule],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: () => inject(ControlContainer, { skipSelf: true }),
+    },
+  ],
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss']
+  styleUrls: ['./input.component.scss'],
 })
 export class InputComponent {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  matcher = new MyErrorStateMather();
+  readonly label = input.required<string>();
+  readonly type = input.required<string>();
+  readonly placeholder = input.required<string>();
+  readonly validators = input.required<ErrorValidator[]>();
+
+  readonly inputValue = input<string>('');
+  readonly inputValueChange = output<string>();
+
+  controlKey = input('');
+
+  parentContainer = inject(ControlContainer);
+
+  get parentFormGroup() {
+    return this.parentContainer.control as FormGroup;
+  }
+
+  // constructor() {
+  //   effect(() => {
+  //     this.inputValueChange.emit(this.inputValue());
+  //   });
+  // }
 }
