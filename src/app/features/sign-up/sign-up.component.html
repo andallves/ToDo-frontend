@@ -1,1 +1,86 @@
-<p>sign-up works!</p>
+<section>
+  <app-navbar-login />
+  <form
+    class="form-container"
+    [formGroup]="signupFormGroup"
+    (ngSubmit)="onSubmit()">
+    <h2 class="form-title">Nova Conta</h2>
+
+    <div class="form-field-container">
+      <mat-form-field class="input-field-container">
+        <mat-label>Nome</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="name"
+          placeholder="Name"
+          [value]="signupFormGroup.get('name')?.value" />
+        <mat-error *ngIf="isInvalid('name', 'required')">
+          Nome é <strong>obrigatório</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-field-container">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          formControlName="email"
+          placeholder="exemplo@email.com"
+          [value]="signupFormGroup.get('email')?.value" />
+        <mat-error *ngIf="isInvalid('email', 'required')">
+          Email é <strong>obrigatório</strong>
+        </mat-error>
+        <mat-error *ngIf="isInvalid('email', 'email')">
+          Email é <strong>inválido</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-field-container">
+        <mat-label>Senha</mat-label>
+        <input
+          type="password"
+          matInput
+          formControlName="password"
+          placeholder="******"
+          [value]="signupFormGroup.get('password')?.value" />
+        <mat-error *ngIf="isInvalid('password', 'required')">
+          Senha é <strong>obrigatório</strong>
+        </mat-error>
+        <mat-error *ngIf="isInvalid('password', 'minlength')">
+          Senha precisa ter no minímo 6 caracteres.
+        </mat-error>
+        <mat-error *ngIf="isInvalid('password', 'maxlength')">
+          Senha pode conter no máximo 25 caracteres
+        </mat-error>
+        <mat-error *ngIf="isInvalid('password', 'pattern')">
+          Senha é precisa conter caracteres especiais
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-field-container">
+        <mat-label>Confirme Senha</mat-label>
+        <input
+          type="password"
+          matInput
+          formControlName="passwordConfirm"
+          placeholder="******"
+          [value]="signupFormGroup.get('passwordConfirm')?.value" />
+        <mat-error *ngIf="isInvalid('passwordConfirm', 'required')">
+          Confirme sua senha
+        </mat-error>
+        <mat-error *ngIf="signupFormGroup.errors?.['passwordNoMatch']">
+          Senhas são diferentes
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <button
+      aria-label="Botão de entrar"
+      class="btn-submit"
+      type="submit"
+      [disabled]="disabledButtonSubmit()">
+      Cadastrar-se
+    </button>
+  </form>
+</section>
