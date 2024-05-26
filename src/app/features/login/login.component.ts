@@ -1,3 +1,4 @@
+import { LoginService } from './services/login.service';
 import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
@@ -8,40 +9,63 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { Router, RouterLink } from '@angular/router';
+import { catchError } from 'rxjs';
+import { NavbarLoginComponent } from 'src/app/core/layouts/navbar-login/navbar-login.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, MatInputModule, ReactiveFormsModule],
+  imports: [
+    FormsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    NavbarLoginComponent,
+    RouterLink,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-  protected registerForm!: FormGroup;
+  protected loginForm!: FormGroup;
   protected formBuilder = inject(FormBuilder);
-  private disabledSubmit: boolean = false;
+  protected disabledSubmit: boolean = false;
+  private loginService = inject(LoginService);
+  private router = inject(Router);
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
   }
 
   onSubmit() {
-    const isValidForm = this.registerForm.valid;
+    const isValidForm = this.loginForm.valid;
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
     if (isValidForm) {
-      console.log(this.registerForm.value);
+      this.loginService
+        .login(email, password)
+        .pipe(
+          catchError(error => {
+            console.log(error);
+            throw error;
+          })
+        )
+        .subscribe(data => {
+          console.log(data);
+          this.router.navigate(['/']);
+        });
     }
   }
 
-  protected disabledButtonSubmit(): boolean {
-    return !this.registerForm.valid;
+  private disabledButtonSubmit(): void {
+    this.disabledSubmit = !this.loginForm.valid;
   }
 
   isValid(nameField: string, nameValidator: string) {
-    const formControl: AbstractControl | null =
-      this.registerForm.get(nameField);
+    const formControl: AbstractControl | null = this.loginForm.get(nameField);
     if (formControl?.errors !== null) {
       return formControl?.errors[nameValidator] && formControl.touched;
     }

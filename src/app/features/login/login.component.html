@@ -1,23 +1,21 @@
 <section>
-  <form
-    class="form-container"
-    [formGroup]="registerForm"
-    (ngSubmit)="onSubmit()">
+  <app-navbar-login />
+  <form class="form-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h2 class="form-title">Autenticação</h2>
 
     <div class="form-field-container">
-      <mat-form-field appearance="fill" class="input-field-container">
+      <mat-form-field class="input-field-container">
         <mat-label>Email</mat-label>
         <input
           type="email"
           matInput
           formControlName="email"
           placeholder="exemplo@email.com"
-          [value]="registerForm.get('email')?.value" />
-        <mat-error *ngIf="isValid('email', 'required')">
+          [value]="loginForm.get('email')?.value" />
+        <mat-error *If="isValid('email', 'required')">
           Email é <strong>obrigatório</strong>
         </mat-error>
-        <mat-error *ngIf="isValid('email', 'email')">
+        <mat-error *If="isValid('email', 'email')">
           Email é <strong>inválido</strong>
         </mat-error>
       </mat-form-field>
@@ -29,18 +27,20 @@
           matInput
           formControlName="password"
           placeholder="********"
-          [value]="registerForm.get('password')?.value" />
-        <mat-error *ngIf="isValid('password', 'required')">
+          [value]="loginForm.get('password')?.value" />
+        <mat-error *If="isValid('password', 'required')">
           Senha é <strong>obrigatória</strong>
         </mat-error>
       </mat-form-field>
     </div>
 
     <button
+      aria-label="Botão de entrar"
       class="btn-submit"
       type="submit"
-      [disabled]="disabledButtonSubmit()">
+      [disabled]="disabledSubmit">
       Entrar
     </button>
+    <a role="button" routerLink="/cadastro">Não possui uma conta?</a>
   </form>
 </section>
