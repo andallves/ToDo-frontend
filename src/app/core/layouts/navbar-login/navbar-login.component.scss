@@ -1,10 +1,24 @@
 .navbar-container {
   width: 100%;
-  height: 15rem;
+  height: 10rem;
   display: flex;
   align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  padding: 3rem 4rem;
+  transition: all 300ms;
+
 
   @media (min-width: 768px) {
-    height: 5rem;
+    height: 0;
+    justify-content: space-between;
+    background: var(--secondary);
+
+  }
+
+  .textLink {
+    font-size: .8rem;
+    color: var(--brand);
+    text-decoration: none;
   }
 }

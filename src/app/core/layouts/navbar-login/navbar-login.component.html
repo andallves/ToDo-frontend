@@ -1,5 +1,7 @@
 <nav #navbar class="navbar-container">
   <app-logo colorfull />
 
-  <!-- <a *if="!isMobile()" class="text">Não possui uma conta?</a> -->
+  @if (!isMobile()) {
+    <a class="textLink" [routerLink]="routerLink()">{{ textLink() }}</a>
+  }
 </nav>

@@ -1,28 +1,33 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
   HostListener,
-  ViewChild,
   computed,
+  input,
+  signal,
 } from '@angular/core';
 import { LogoComponent } from '../../components/logo/logo.component';
+import { NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-login',
   standalone: true,
-  imports: [LogoComponent],
+  imports: [LogoComponent, NgClass, RouterLink],
   templateUrl: './navbar-login.component.html',
   styleUrl: './navbar-login.component.scss',
 })
 export class NavbarLoginComponent {
-  @ViewChild('navbar') navbarWidth!: ElementRef;
-  protected screenWidth!: number;
-  protected isMobile = computed(() => this.screenWidth < 578);
+  private readonly screenWidth = signal<number>(0);
+  protected isMobile = computed<boolean>(() => this.screenWidth() < 768);
+  public  textLink = input.required<string>();
+  public  routerLink = input.required<string>();
+
+  constructor() {
+    this.screenWidth.set(window.innerWidth);
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.screenWidth = this.navbarWidth.nativeElement.innerWidth;
-    console.log(this.screenWidth);
+    this.screenWidth.set(window.innerWidth);
   }
 }
