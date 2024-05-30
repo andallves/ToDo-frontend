@@ -3,9 +3,7 @@ import { Injectable, inject } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SignUpService {
   private apiUrl = environment.apiUrl;
   private httpClient = inject(HttpClient);
