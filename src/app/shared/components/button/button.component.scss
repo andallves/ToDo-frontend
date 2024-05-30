@@ -1,0 +1,26 @@
+.btn-submit {
+  $bg-color: #27C498;
+
+  background: $bg-color;
+  padding: .6rem 0;
+  border-radius: .3rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: .5;
+    background: darken($bg-color, 10%);
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    background: darken($bg-color, 10%);
+  }
+
+}

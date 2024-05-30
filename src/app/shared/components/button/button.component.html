@@ -1,0 +1,13 @@
+<button
+  [attr.aria-label]="ariaLabel()"
+  class="btn-submit"
+  [type]="type()"
+  [disabled]="disabled()"
+  [style.width.%]="buttonWidth()"
+  (click)="onClick()">
+  @if (isLoading()) {
+    <mat-spinner [diameter]="30" [color]="'#25294C'"></mat-spinner>
+  } @else {
+    {{ buttonText() }}
+  }
+</button>
