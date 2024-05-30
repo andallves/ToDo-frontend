@@ -8,7 +8,7 @@ describe('CheckedComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CheckedComponent]
+      imports: [CheckedComponent],
     });
     fixture = TestBed.createComponent(CheckedComponent);
     component = fixture.componentInstance;

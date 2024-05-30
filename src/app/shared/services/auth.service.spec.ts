@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
+import { AccessToken } from 'src/app/core/models/login.interface';
 
 describe(AuthService.name, () => {
   let service: AuthService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [AuthService],
+    });
     service = TestBed.inject(AuthService);
   });
 
@@ -15,6 +18,7 @@ describe(AuthService.name, () => {
   });
 
   it(`${AuthService.prototype.getToken.name} should return token when called`, () => {
-    expect(service.getToken()).toBe(null);
+    const token: AccessToken = service.getToken();
+    expect(token).toBeFalsy();
   });
 });
