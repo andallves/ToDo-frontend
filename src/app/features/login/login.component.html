@@ -1,46 +1,57 @@
-<section>
-  <app-navbar-login />
-  <form class="form-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <h2 class="form-title">Autenticação</h2>
+<app-navbar-login textLink="Não possui uma conta?" routerLink="/cadastro" />
+<section class="login-component">
+  <mat-card class="login">
+    <mat-card-header>
+      <mat-card-title class="title">Login</mat-card-title>
+    </mat-card-header>
+    <form
+      class="form-container"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()">
+      <mat-card-content class="form-field-container">
+        <mat-form-field class="input-field-container">
+          <mat-label>Email</mat-label>
+          <input
+            type="email"
+            matInput
+            formControlName="email"
+            placeholder="exemplo@email.com"
+            [value]="loginForm.get('email')?.value" />
+          <mat-error *ngIf="isInvalid('email', 'required')">
+            Email é <strong>obrigatório</strong>
+          </mat-error>
+          <mat-error *ngIf="isInvalid('email', 'email')">
+            Email é <strong>inválido</strong>
+          </mat-error>
+        </mat-form-field>
 
-    <div class="form-field-container">
-      <mat-form-field class="input-field-container">
-        <mat-label>Email</mat-label>
-        <input
-          type="email"
-          matInput
-          formControlName="email"
-          placeholder="exemplo@email.com"
-          [value]="loginForm.get('email')?.value" />
-        <mat-error *If="isValid('email', 'required')">
-          Email é <strong>obrigatório</strong>
-        </mat-error>
-        <mat-error *If="isValid('email', 'email')">
-          Email é <strong>inválido</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="input-field-container">
-        <mat-label>Senha</mat-label>
-        <input
-          type="password"
-          matInput
-          formControlName="password"
-          placeholder="********"
-          [value]="loginForm.get('password')?.value" />
-        <mat-error *If="isValid('password', 'required')">
-          Senha é <strong>obrigatória</strong>
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <button
-      aria-label="Botão de entrar"
-      class="btn-submit"
-      type="submit"
-      [disabled]="disabledSubmit">
-      Entrar
-    </button>
-    <a role="button" routerLink="/cadastro">Não possui uma conta?</a>
-  </form>
+        <mat-form-field class="input-field-container">
+          <mat-label>Senha</mat-label>
+          <input
+            type="password"
+            matInput
+            formControlName="password"
+            placeholder="********"
+            [value]="loginForm.get('password')?.value" />
+          <mat-error *ngIf="isInvalid('password', 'required')">
+            Senha é <strong>obrigatória</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <app-button
+          [ariaLabel]="'login button'"
+          [type]="'submit'"
+          [disabled]="this.loginForm.invalid"
+          [isLoading]="this.isLoading()"
+          buttonText="Entrar"></app-button>
+      </mat-card-actions>
+      <p class="signup-text">
+        Não possui uma conta?
+        <a class="signup-link" role="button" routerLink="/cadastro"
+          >Clique aqui para cadastrar</a
+        >
+      </p>
+    </form>
+  </mat-card>
 </section>
