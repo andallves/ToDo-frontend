@@ -1,40 +1,32 @@
-import { Injectable } from '@angular/core';
-import { jwtDecode } from 'jwt-decode';
-import { AccessToken } from 'src/app/core/models/login.interface';
-import { User } from 'src/app/core/models/user.interface';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Observable, tap } from 'rxjs';
+import {
+  AuthResponse,
+  LoginCredentials,
+} from 'src/app/core/models/login.interface';
+import { environment } from 'src/environments/environment';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
-  private readonly tokenKey = 'auth_token';
+  private readonly apiUrl = environment.apiUrl;
 
-  public setToken(token: AccessToken): void {
-    if (token === null) throw Error('The token must to be diferent to null');
-    localStorage.setItem(this.tokenKey, token);
-  }
+  private httpClient = inject(HttpClient);
+  private UserService = inject(UserService);
 
-  public removeToken(): void {
-    localStorage.removeItem(this.tokenKey);
-  }
-
-  public getToken(): AccessToken {
-    const isValidToken = this.isValidToken();
-    if (isValidToken) {
-      return localStorage.getItem(this.tokenKey);
-    }
-    return null;
-  }
-
-  private isValidToken(): boolean {
-    const token = localStorage.getItem(this.tokenKey);
-    return !!token;
-  }
-
-  public decodeToken(): User | null {
-    const token = this.getToken();
-    if (token !== null) {
-      const decodedToken: User = jwtDecode(token);
-      return decodedToken;
-    }
-    return null;
+  public authenticate(
+    loginCredentials: LoginCredentials
+  ): Observable<HttpResponse<AuthResponse>> {
+    return this.httpClient
+      .post<AuthResponse>(`${this.apiUrl}/Auth/login`, loginCredentials, {
+        observe: 'response',
+      })
+      .pipe(
+        tap(response => {
+          const authToken = response.body?.accessToken || '';
+          this.UserService.saveToken(authToken);
+        })
+      );
   }
 }
