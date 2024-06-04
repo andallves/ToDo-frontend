@@ -13,7 +13,7 @@ export class AuthService {
   private readonly apiUrl = environment.apiUrl;
 
   private httpClient = inject(HttpClient);
-  private UserService = inject(UserService);
+  private userService = inject(UserService);
 
   public authenticate(
     loginCredentials: LoginCredentials
@@ -25,7 +25,7 @@ export class AuthService {
       .pipe(
         tap(response => {
           const authToken = response.body?.accessToken || '';
-          this.UserService.saveToken(authToken);
+          this.userService.saveToken(authToken);
         })
       );
   }
