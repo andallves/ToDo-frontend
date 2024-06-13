@@ -1,4 +1,4 @@
-import { booleanAttribute, Component, input, Input } from '@angular/core';
+import { booleanAttribute, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-svg-checked',
