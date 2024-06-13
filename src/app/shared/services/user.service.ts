@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthTokenService } from './auth-token.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'src/app/core/models/user.interface';
 import { jwtDecode } from 'jwt-decode';
 
@@ -9,6 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class UserService {
   private userSubject$ = new BehaviorSubject<User | null>(null);
+
   constructor(private tokenService: AuthTokenService) {
     if (tokenService.getAuthToken()) {
       this.decodeJWT();
@@ -21,21 +22,21 @@ export class UserService {
     return this.userSubject$.next(user);
   }
 
-  public returnUser() {
+  public getUser(): Observable<User | null> {
     return this.userSubject$.asObservable();
   }
 
-  public saveToken(token: string) {
+  public saveToken(token: string): void {
     this.tokenService.setAuthToken(token);
     this.decodeJWT();
   }
 
-  public logout() {
+  public logout(): void {
     this.tokenService.removeAuthToken();
     this.userSubject$.next(null);
   }
 
-  public isLoggedIn() {
-    this.tokenService.hasAuthToken();
+  public isLoggedIn(): boolean {
+    return this.tokenService.hasAuthToken();
   }
 }
