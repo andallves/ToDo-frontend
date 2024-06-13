@@ -1,7 +1,9 @@
 <nav #navbar class="navbar-container">
-  <app-logo colorfull />
+  <app-logo colorfull routerLink="/" />
 
   @if (!isMobile()) {
-    <a class="textLink" [routerLink]="routerLink()">{{ textLink() }}</a>
+    <a class="textLink" role="button" [routerLink]="routerLinkButton()">{{
+      textLinkButton()
+    }}</a>
   }
 </nav>

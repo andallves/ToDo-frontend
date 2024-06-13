@@ -5,7 +5,8 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { NavbarLoginComponent } from './navbar-login.component';
 
-describe('NavbarLoginComponent', () => {
+
+describe(`#${NavbarLoginComponent.name}`, () => {
   let component: NavbarLoginComponent;
   let fixture: ComponentFixture<NavbarLoginComponent>;
 
@@ -32,5 +33,13 @@ describe('NavbarLoginComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it(`#${NavbarLoginComponent.prototype.onResize.name}
+  should listener width when the windows on resize`, () => {
+    fixture.detectChanges();
+    const spy = spyOn(component.screenWidth, 'set');
+    window.dispatchEvent(new Event('resize'));
+    expect(spy).toHaveBeenCalledWith(window.innerWidth);
   });
 });

@@ -17,10 +17,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar-login.component.scss',
 })
 export class NavbarLoginComponent {
-  private readonly screenWidth = signal<number>(0);
+  public screenWidth = signal<number>(0);
   protected isMobile = computed<boolean>(() => this.screenWidth() < 768);
-  public  textLink = input.required<string>();
-  public  routerLink = input.required<string>();
+  textLinkButton = input.required<string>();
+  routerLinkButton = input.required<string>();
 
   constructor() {
     this.screenWidth.set(window.innerWidth);
