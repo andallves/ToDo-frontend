@@ -1,9 +1,9 @@
 :host {
   width: 100%;
+  cursor: pointer;
 }
-.btn-submit {
-  $bg-color: #27C498;
 
+.btn {
   background: var(--brand);
   padding: .6rem 0;
   border-radius: .3rem;
@@ -15,7 +15,6 @@
   justify-content: center;
   align-items: center;
   text-shadow: 0 0 .2rem rgba(0, 0, 0, 0.8);
-  cursor: pointer;
 
   &:disabled {
     opacity: .5;
