@@ -24,5 +24,5 @@ export class CheckedComponent {
   width = input('29');
   height = input('24');
   fill = input('#E9ECEF');
-  protected colorful = '#27C498';
+  protected readonly colorful = '#aedd2b';
 }
