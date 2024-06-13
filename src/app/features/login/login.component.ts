@@ -1,5 +1,9 @@
-import { LoginService } from './services/login.service';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router, RouterLink } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,10 +12,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
-import { catchError } from 'rxjs';
+import Swal from 'sweetalert2';
 import { NavbarLoginComponent } from 'src/app/core/layouts/navbar-login/navbar-login.component';
+import { LoginCredentials } from 'src/app/core/models/login.interface';
+import { AuthService } from './../../shared/services/auth.service';
+import { ButtonComponent } from 'src/app/shared/components/button/button.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormValidations } from 'src/app/shared/validators/form-validations';
 
 @Component({
   selector: 'app-login',
@@ -22,15 +29,21 @@ import { NavbarLoginComponent } from 'src/app/core/layouts/navbar-login/navbar-l
     ReactiveFormsModule,
     NavbarLoginComponent,
     RouterLink,
+    NgIf,
+    ButtonComponent,
+    MatProgressSpinnerModule,
+    MatCardModule,
   ],
+  providers: [AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
   protected loginForm!: FormGroup;
+  protected isLoading = signal<boolean>(false);
+
   protected formBuilder = inject(FormBuilder);
-  protected disabledSubmit: boolean = false;
-  private loginService = inject(LoginService);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
   ngOnInit() {
@@ -40,34 +53,43 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  protected onSubmit() {
     const isValidForm = this.loginForm.valid;
-    const email = this.loginForm.get('email')?.value;
-    const password = this.loginForm.get('password')?.value;
     if (isValidForm) {
-      this.loginService
-        .login(email, password)
-        .pipe(
-          catchError(error => {
-            console.log(error);
-            throw error;
-          })
-        )
-        .subscribe(data => {
-          console.log(data);
-          this.router.navigate(['/']);
-        });
+      const loginCredentials: LoginCredentials = this.loginForm.value;
+      this.login(loginCredentials);
     }
   }
 
-  private disabledButtonSubmit(): void {
-    this.disabledSubmit = !this.loginForm.valid;
+  private login(loginCredentials: LoginCredentials) {
+    this.isLoading.set(true);
+    this.authService.authenticate(loginCredentials).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/');
+      },
+      error: errorResponse => {
+        this.showErrorMessage(errorResponse);
+        this.isLoading.set(false);
+        this.loginForm.reset();
+      },
+    });
   }
 
-  isValid(nameField: string, nameValidator: string) {
+  private showErrorMessage(errorResponse: HttpErrorResponse) {
+    const message = errorResponse.error['erros'];
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops!',
+      text: message,
+      confirmButtonText: 'Ok',
+      allowEnterKey: true,
+      closeButtonAriaLabel: 'Close button',
+      confirmButtonColor: '#27C498',
+    });
+  }
+
+  protected isInvalid(nameField: string, nameValidator: string): boolean {
     const formControl: AbstractControl | null = this.loginForm.get(nameField);
-    if (formControl?.errors !== null) {
-      return formControl?.errors[nameValidator] && formControl.touched;
-    }
+    return FormValidations.isInvalid(formControl, nameValidator);
   }
 }
