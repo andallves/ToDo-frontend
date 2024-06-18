@@ -5,7 +5,6 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { NavbarLoginComponent } from './navbar-login.component';
 
-
 describe(`#${NavbarLoginComponent.name}`, () => {
   let component: NavbarLoginComponent;
   let fixture: ComponentFixture<NavbarLoginComponent>;

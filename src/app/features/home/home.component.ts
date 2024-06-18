@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models/user.interface';
 import { UserService } from 'src/app/shared/services/user.service';
 
