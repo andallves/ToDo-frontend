@@ -4,7 +4,9 @@
 <section class="login-component">
   <mat-card class="login">
     <mat-card-header>
-      <mat-card-title class="title">Login</mat-card-title>
+      <mat-card-title class="title" aria-label="tela de login">
+        Login
+      </mat-card-title>
     </mat-card-header>
     <form
       class="form-container"
@@ -12,30 +14,36 @@
       (ngSubmit)="onSubmit()">
       <mat-card-content class="form-field-container">
         <mat-form-field class="input-field-container">
-          <mat-label>Email</mat-label>
+          <mat-label aria-label="campo de email">Email</mat-label>
           <input
+            aria-describedby="email-required email-invalid"
+            [attr.aria-invalid]="loginForm.get('email')?.invalid"
             type="email"
             matInput
             formControlName="email"
             placeholder="exemplo@email.com"
             [value]="loginForm.get('email')?.value" />
-          <mat-error *ngIf="isInvalid('email', 'required')">
+          <mat-error id="email-required" *ngIf="isInvalid('email', 'required')">
             Email é <strong>obrigatório</strong>
           </mat-error>
-          <mat-error *ngIf="isInvalid('email', 'email')">
+          <mat-error id="email-invalid" *ngIf="isInvalid('email', 'email')">
             Email é <strong>inválido</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field class="input-field-container">
-          <mat-label>Senha</mat-label>
+          <mat-label aria-label="campo de senha">Senha</mat-label>
           <input
+            aria-describedby="password-required"
+            [attr.aria-invalid]="loginForm.get('password')?.invalid"
             type="password"
             matInput
             formControlName="password"
             placeholder="********"
             [value]="loginForm.get('password')?.value" />
-          <mat-error *ngIf="isInvalid('password', 'required')">
+          <mat-error
+            id="password-required"
+            *ngIf="isInvalid('password', 'required')">
             Senha é <strong>obrigatória</strong>
           </mat-error>
         </mat-form-field>

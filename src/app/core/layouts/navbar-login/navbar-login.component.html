@@ -2,8 +2,12 @@
   <app-logo colorfull routerLink="/" />
 
   @if (!isMobile()) {
-    <a class="textLink" role="button" [routerLink]="routerLinkButton()">{{
-      textLinkButton()
-    }}</a>
+    <a
+      class="textLink"
+      role="button"
+      [tabindex]="0"
+      [routerLink]="routerLinkButton()"
+      >{{ textLinkButton() }}</a
+    >
   }
 </nav>

@@ -16,7 +16,7 @@
   align-items: center;
   text-shadow: 0 0 .2rem rgba(0, 0, 0, 0.8);
 
-  &:disabled {
+  &:disabled, &[aria-disabled=true] {
     opacity: .5;
     cursor: not-allowed;
   }

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { LogoComponent } from '../../components/logo/logo.component';
 import { NgClass } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-login',
@@ -22,7 +22,7 @@ export class NavbarLoginComponent {
   textLinkButton = input.required<string>();
   routerLinkButton = input.required<string>();
 
-  constructor() {
+  constructor(private router: Router) {
     this.screenWidth.set(window.innerWidth);
   }
 
